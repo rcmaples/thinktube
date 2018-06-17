@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
 
-  <title></title>
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <title>Thinktube - YouTube API Hack</title>
+  <meta name="description" content="Project exploring AJAX Api Usage">
+  <meta name="author" content="RC Maples">
 
   <link rel="stylesheet" href="./css/main.css?v=1.0">
   <link rel="stylesheet" href="./css/float-grid.css?v=1.0">
@@ -23,6 +23,7 @@
 		<img class="logo" alt="ThinkTube" src="./logo.svg"/>
 	</header>
 	<main role="main">
+		
 		<aside class="js-results-nav">
 			<ul></ul>
 		</aside>
@@ -30,9 +31,9 @@
 		<row>
 			<section class="col-8 search-section">
 				<form name="searchForm" class="js-search">
-	  				<label for="searchQuery"> Search Videos</label>
-	  				<input type="text" name="searchQuery" class="inputSearch" placeholder="I hear the internet likes cats...">
-	  				<button type="submit" class="search-button"></button>
+	  				<label for="searchQuery">Search Videos</label>
+	  				<input type="text" name="searchQuery" class="inputSearch" placeholder="I hear the internet likes cats..." title="Enter your Search terms." required>
+	  				<button type="submit" class="search-button" title="Search"><span style="visibility:hidden">Search</span></button>
   				</form>
 
 			</section>

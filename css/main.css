@@ -31,6 +31,25 @@ header .logo {
 	margin-top: 10px;
 }
 
+.search-section button {
+	color:black;
+	width: 65px;
+	cursor: pointer;
+	background-image: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzIwMCcgd2lkdGg9JzIwMCcgIGZpbGw9IiMwMDAwMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDE1LjY5IDE1LjQ4IiB4PSIwcHgiIHk9IjBweCI+PHRpdGxlPlNlYXJjaDwvdGl0bGU+PGcgZGF0YS1uYW1lPSJVSSBFbGVtZW50cyI+PHBhdGggZD0iTTE1LjI4LDEyLjcxLDExLjg1LDkuMjdhNi4yMSw2LjIxLDAsMCwwLC43NS0zLDYuMyw2LjMsMCwxLDAtNi4zLDYuMyw2LjIzLDYuMjMsMCwwLDAsMy4yMy0uOWwzLjM5LDMuMzlhMS4zOSwxLjM5LDAsMCwwLDIsMGwuNC0uNEExLjQsMS40LDAsMCwwLDE1LjI4LDEyLjcxWm0tOS0yLjI1YTQuMTYsNC4xNiwwLDEsMSw0LjE2LTQuMTdBNC4xNiw0LjE2LDAsMCwxLDYuMywxMC40NloiPjwvcGF0aD48L2c+PC9zdmc+");
+	background-size: 22px;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 30px;
+	border: 1px solid #DDDDDD;
+  	border-radius: 3px;
+	  vertical-align: bottom;
+	margin-left:-5px;
+}
+
+.search-section button:hover {
+	background-color:#DDDDDD;
+}
+
 .js-player {
 	margin-top: 10px;
 }
@@ -145,13 +164,6 @@ ul {
 
 
 .search-button {
-	background-image: url("https://tf-assets-prod.s3.amazonaws.com/tf-curric/WEB-DEV-001/2.4.6_challenge_design_to_code/magnifying-glass.png");
-	background-size: 25px;
-	background-repeat: no-repeat;
-	background-position: center;
-	height: 30px;
-	width: 37px;
-	border: 1px solid #DDDDDD;
-  	border-radius: 3px;
-  	vertical-align: bottom;
+
+	
 }
