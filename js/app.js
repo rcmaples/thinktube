@@ -87,15 +87,15 @@ function loadNav (data){
     if (!data.hasOwnProperty(`prevPageToken`)) {
         $('.js-results-nav').find('ul').append(
             `<ul class="js-nav">
-                <li><button type="button" value="Previous" class="js-prev-button pagination" disabled>Previous</button></li>
-                <li><button type="button" value="Next" class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</button></li>
+                <li class="js-prev-button pagination" disabled>Previous</li>
+                <li class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</li>
             </ul> `
         );
     } else {
         $('.js-results-nav').find('ul').append(
             `<ul class="js-nav">
-            <li><button type="button" value="Previous" class="js-prev-button pagination" pageToken=${data.prevPageToken}>Previous</button></li>
-            <li><button type="button" value="Next" class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</button></li>
+            <li class="js-prev-button pagination" pageToken=${data.prevPageToken}>Previous</li>
+            <li class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</li>
             </ul> `
         );
     }

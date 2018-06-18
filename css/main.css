@@ -178,14 +178,3 @@ header h1{
 	display: none;
 	visibility: hidden;
 }
-
-.js-nav li {
-	display: inline;
-	padding-right: 10px;
-	border: 0;
-	min-width: 320px;
-}
-
-.js-nav li > .button {
-	width:100%;
-}
