@@ -86,17 +86,17 @@ function loadNav (data){
 
     if (!data.hasOwnProperty(`prevPageToken`)) {
         $('.js-results-nav').find('ul').append(
-            `<form class="js-nav">
+            `<div class="js-nav">
                 <input type="button" value="Previous" class="js-prev-button pagination" disabled>
                 <input type="button" value="Next" class="js-next-button pagination" pageToken=${data.nextPageToken}>
-            </form> `
+            </div> `
         );
     } else {
         $('.js-results-nav').find('ul').append(
-            `<form class="js-nav">
+            `<div class="js-nav">
                 <input type="button" value="Previous" class="js-prev-button pagination" pageToken=${data.prevPageToken}>
                 <input type="button" value="Next" class="js-next-button pagination" pageToken=${data.nextPageToken}>
-            </form> `
+            </div> `
         );
     }
     watchNav(videoQuery);

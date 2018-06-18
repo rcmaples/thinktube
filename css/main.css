@@ -177,3 +177,9 @@ aside {
 ul {
 	height: 740px;
 }
+
+header h1{
+	height: 1px;
+	display: none;
+	visibility: hidden;
+}
