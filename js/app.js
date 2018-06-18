@@ -44,10 +44,12 @@ function watchSubmit() {
 
 function watchNav(searchTerm){
     //alert(searchTerm);
+    $('#disabled').unbind('click');
+
     $('.js-nav').on('click', '.pagination', function(event){
+        event.preventDefault();
         let whichPage = $(event.currentTarget).attr('pagetoken');
         getVideos(searchTerm, loadNav, whichPage);
-        console.log(`${searchTerm}`); // To fix, this is undefined.
         $('.js-results-nav').find('ul').empty();;
     });
 }
@@ -87,7 +89,7 @@ function loadNav (data){
     if (!data.hasOwnProperty(`prevPageToken`)) {
         $('.js-results-nav').find('ul').append(
             `<ul class="js-nav">
-                <li class="js-prev-button pagination" disabled>Previous</li>
+                <li id="disabled" class="js-prev-button pagination">Previous</li>
                 <li class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</li>
             </ul> `
         );

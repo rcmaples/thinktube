@@ -140,7 +140,7 @@ header .logo {
     box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.08);
 }
 
-.pagination:disabled {
+#disabled, #disabled:hover {
 	cursor: not-allowed;
 	background-color: #d4d4d4;
 	border: none;
