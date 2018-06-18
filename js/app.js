@@ -78,7 +78,7 @@ function loadNav (data){
        // console.log(i);
         $('.js-results-nav').find('ul').append(
             `<li id="${data.items[i].id.videoId}" js-channel-id="${data.items[i].snippet.channelId}" js-channel-title="${data.items[i].snippet.channelTitle}">
-                <img src="${data.items[i].snippet.thumbnails.medium['url']}" alt="${data.items[i].snippet.title}">
+                <img src="${data.items[i].snippet.thumbnails.medium['url']}" alt="${data.items[i].snippet.channelTitle}">
                 <p>${data.items[i].snippet.title}</p>
             </li>`
         );
@@ -111,7 +111,7 @@ function loadVideo(vid, chanId, chanTitle){
     //console.log(`loadVideo Ran`);
 
     $('.js-player').html(
-        `<iframe width="100%" height="480" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+        `<iframe width="100%" height="480" src="https://www.youtube.com/embed/${videoId}" frameborder="0" title="Youtube Video" allowfullscreen></iframe>
         <p>For more video from this channel, visit: <a href="https://www.youtube.com/channel/${channelId}" target="_blank">${channelTitle}</a></p>`
         );
 
