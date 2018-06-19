@@ -1,60 +1,73 @@
 'use strict'
 
 /* 
+    Important things to know
 
-Important things to know
+    Things we need from the youtube API:
+    videoId           --    data.items[i].id.videoId
+    Video Description --    data.items[i].snippet.description // Maybe not. I don't like this property.
+    Published Date    --    data.items[i].snippet.publishedAt
+    Thumbnail         --    data.items[i].snippet.thumbnails.default["url"]
+    Title             --    data.items[i].snippet.title
+    channelId         --    data.items[i].snippet.channelId
+                            `https://www.youtube.com/channel/${channelId}`
+    pageToken         --    data.nextPageToken ; data.prevPageToken
 
-Things we need from the youtube API:
-videoId           --    data.items[i].id.videoId
-Video Description --    data.items[i].snippet.description // Maybe not. I don't like this property.
-Published Date    --    data.items[i].snippet.publishedAt
-Thumbnail         --    data.items[i].snippet.thumbnails.default["url"]
-Title             --    data.items[i].snippet.title
-channelId         --    data.items[i].snippet.channelId
-                        `https://www.youtube.com/channel/${channelId}`
+    Youtube API URL Endpoint: (`part=snippet` is required)
+    https://www.googleapis.com/youtube/v3/search
 
-Youtube API URL: (`part=snippet` is required)
-https://www.googleapis.com/youtube/v3/search?&part=snippet?key=AIzaSyBKvnTl8IlN92kFkqDNq3d6Z7Bri9dWMrQ?q=cat
-
-data.items[i].id.videoId
-data.items[i].snippet.description
-data.items[i].snippet.publishedAt
-data.items[i].snippet.thumbnails.default["url"]
-data.items[i].snippet.title
-
-Default behavior will be searching for cats. Everyone on the internet likes cats.
+    data.items[i].id.videoId
+    data.items[i].snippet.description
+    data.items[i].snippet.publishedAt
+    data.items[i].snippet.thumbnails.default["url"]
+    data.items[i].snippet.title
 */
 
+
+// Global Scoped Variables - Key String for API; API Endpoint; and a place to store the Search Terms.
 const YOUTUBE_SEARCH_URL = `https://www.googleapis.com/youtube/v3/search`;
 const keyStr=`AIzaSyBKvnTl8IlN92kFkqDNq3d6Z7Bri9dWMrQ`;
 let videoQuery = "";
 
+
+
+
+/*  watch Submit - No args - Event Listener for the Search Form submit button. 
+    on Submit it calls getVideos with the searchTerm and the loadNav function as a callback.
+    */
 function watchSubmit() {
-    
     $('.js-search').submit(event => {
       event.preventDefault();
       const searchTarget = $(event.currentTarget).find('.inputSearch');
       videoQuery = searchTarget.val();
       getVideos(videoQuery, loadNav);
-      //watchNav(videoQuery);
-      //searchTarget.val("");
       $('.js-results-nav').find('ul').html(``);
     });
   }
 
-function watchNav(searchTerm){
-    //alert(searchTerm);
-    $('#disabled').unbind('click');
-
+/*  watchNav - args:searchTerm as String - Event Listener for pagination buttons.
+    On first load previous button has id:disabled if the disabled button is clicked,
+    return false to keep it from doing anything; 
+    else call getVideos with search term., loadNav callback, and the page token of the button
+    */
+function watchNav(searchTerm) {
     $('.js-nav').on('click', '.pagination', function(event){
         event.preventDefault();
-        let whichPage = $(event.currentTarget).attr('pagetoken');
-        getVideos(searchTerm, loadNav, whichPage);
-        $('.js-results-nav').find('ul').empty();;
+        if ($(event.currentTarget).attr('id')==='disabled'){
+            return false;
+        } else {
+            let whichPage = $(event.currentTarget).attr('pagetoken');
+            getVideos(searchTerm, loadNav, whichPage);
+            $('.js-results-nav').find('ul').empty();;
+        }
     });
 }
 
-// search for videos using the query string from the form
+/*  getVideos - args: searchTerm(String); callback(function); pageID(string)[Optional]
+    Load in a new object called query; query contains the api Key, Part, q(uery), 
+    type, and video embeddable flag for youtube api. pageId is optional. If present, load
+    it in to the query string. On success do callback. (Generally loadNav here.
+    */
 function getVideos(searchTerm, callback, pageId) {
     const query = {
       key: `${keyStr}`,
@@ -63,16 +76,18 @@ function getVideos(searchTerm, callback, pageId) {
       type: `video`,
       videoEmbeddable: 'true'
     };
-
     if (pageId){
         query.pageToken = `${pageId}`;
     }
-
     $.getJSON(YOUTUBE_SEARCH_URL, query, callback);
-  }
+}
 
-// Need to load the API Response into the Right side Navbar.
-// Use CSS Class js-results-nav
+/* loadNav - args: data(Object) -
+    loadData looks at the results from getVideos to see total length (expects 5), 
+    then loop through. Append an li for each item in the loop while i < length.
+    Load in various data points (videoId, channelId, ChannelTitle,Thumbnails.
+    Next it creates pagination buttons and loads in the pageTokens of the api responses.
+    */
 function loadNav (data){
     //console.log(data.nextPageToken);
     // iterate through api response and fill in list items in the UL
@@ -85,7 +100,7 @@ function loadNav (data){
             </li>`
         );
     }
-
+    // Create Pagination, first page, disable 'previous' button.
     if (!data.hasOwnProperty(`prevPageToken`)) {
         $('.js-results-nav').find('ul').append(
             `<ul class="js-nav">
@@ -93,7 +108,7 @@ function loadNav (data){
                 <li class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</li>
             </ul> `
         );
-    } else {
+    } else { // Create pagination, 2nd page and after get both buttons.
         $('.js-results-nav').find('ul').append(
             `<ul class="js-nav">
             <li class="js-prev-button pagination" pageToken=${data.prevPageToken}>Previous</li>
@@ -102,10 +117,12 @@ function loadNav (data){
         );
     }
     watchNav(videoQuery);
+    // after nav is loaded, call watchNav, passing the search term back in and start again!
 }
 
-// When a thumbnail is clicked, play the video.
-// pay attention to the videoId of the item being clicked
+
+/*  loadVideo - args:vid, chandId, chanTitle all are strings.
+    Use the args to invoke the youtube player iframe embed. */
 function loadVideo(vid, chanId, chanTitle){
     let channelId = chanId;
     let videoId = vid;
@@ -118,6 +135,7 @@ function loadVideo(vid, chanId, chanTitle){
         );
 
     // event listener for button clicks. 
+    // When a nav button is clicked re-run loadVideo with that button's video and channel info 
     $('.js-results-nav').on('click', 'li',
         function(event){
             //console.log($(this).attr("ID"));
@@ -126,11 +144,18 @@ function loadVideo(vid, chanId, chanTitle){
     });    
 }
 
+
+/* 
+    On load, run the getVideos app with "Raccoons" as the query adn loadNav as the callback.
+        - This provides the default state so that the app isn't blank on first run.
+    Then, run the loadVideo with the predefined videoID, Channel ID, and Channel Title.
+        - The values here are default and were manually pulled from the API responses during dev.
+    Finally, launch the function to start the event listener on the submit button.
+*/
 function loadApp(){
-    getVideos("racoons", loadNav);
+    getVideos("raccoons", loadNav);
     loadVideo('4olSy5UXO_M','UCeZe0VwwhEf8KTI2FHfJtTg','Funny Pets'); // set initial video
     watchSubmit();
-    
 }
 
 $(loadApp);
