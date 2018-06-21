@@ -49,7 +49,7 @@ header .logo {
 	margin-left:-5px;
 }
 
-.search-section button:hover {
+.search-section button:hover, .search-section button:focus {
 	background-color:#DDDDDD;
 	border:1px solid darkgray;
 }
@@ -100,14 +100,71 @@ header .logo {
 	min-width: 320px;
 }
 
-.js-results-nav > ul > li:hover{
+.js-results-nav > ul > li:hover, .js-results-nav > ul > li:focus {
 	 border: 1px solid white;
      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.08);
      cursor: pointer;
 	 padding-bottom: 2px;
 }
 
- .pagination {
+.js-results-nav img {
+	
+	height: 102px;
+	float:left;
+}
+
+.js-results-nav p, .js-results-nav p:hover {
+	text-align: justify;
+	margin-top: 5px;
+}
+
+.js-results-nav {
+	height: 740px;
+}
+
+header h1{
+	height: 1px;
+	display: none;
+	visibility: hidden;
+}
+
+.ytp-cards-button-icon {
+	visibility: hidden;
+}
+
+form .js-results-nav {
+	padding-right: 1.04166666%;
+	display:inline-block;
+	list-style: none;
+	width:100%;
+	margin-top: -10px;
+	-webkit-padding-start: 0px;
+	-webkit-margin-before: 0px;
+	padding-left: 1.04166666%;
+}
+
+.js-results-nav > button {
+	border: 1px solid #DDDDDD;
+	border-radius: 3px;
+	margin-bottom: 20px;
+	width:80%;
+	font-size: 1.10em;
+	padding:7px 5px 5px 5px;
+}
+
+.js-results-nav > button:hover, .js-results-nav > button:focus {
+	 border: 1px solid white;
+     box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.08);
+     cursor: pointer;
+}
+
+/*
+.js-results-nav > button > p, .js-results-nav p:hover {
+	text-align: justify;
+	margin-top: 5px;
+} */
+
+.pagination {
 	cursor: pointer;
 	background-color: #e00606;
 	border: none;
@@ -123,24 +180,7 @@ header .logo {
 	border-radius: 5px;
 }
 
- .pagination:hover {
-	cursor: pointer;
-	background-color: #f7584c;
-	border: none;
-	color: white;
-	width: 40%;
-	padding: 15px 15px;
-	margin: 5px;
-	text-align: center;
-	display: inline-block;
-	font-size: 20px;
-	font-weight: 500;
-	font-family: 'Roboto';
-	border-radius: 5px;
-    box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.08);
-}
-
-#disabled, #disabled:hover {
+#disabled, #disabled:hover, #disabled:focus {
 	cursor: not-allowed;
 	background-color: #d4d4d4;
 	border: none;
@@ -157,24 +197,12 @@ header .logo {
 	box-shadow: none;
 }
 
-.js-results-nav img {
-	margin-top: 5px;
-	height: 102px;
-	float:left;
-	
+fieldset {
+	border: none;
 }
 
-.js-results-nav p, .js-results-nav p:hover {
-	text-align: justify;
-	margin-top: 5px;
-}
-
-.js-results-nav > ul {
-	height: 740px;
-}
-
-header h1{
-	height: 1px;
-	display: none;
-	visibility: hidden;
-}
+legend {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
+}}

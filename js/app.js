@@ -41,7 +41,7 @@ function watchSubmit() {
       const searchTarget = $(event.currentTarget).find('.inputSearch');
       videoQuery = searchTarget.val();
       getVideos(videoQuery, loadNav);
-      $('.js-results-nav').find('ul').html(``);
+      $('.js-results-nav').find('legend').nextAll().remove();
     });
   }
 
@@ -58,7 +58,7 @@ function watchNav(searchTerm) {
         } else {
             let whichPage = $(event.currentTarget).attr('pagetoken');
             getVideos(searchTerm, loadNav, whichPage);
-            $('.js-results-nav').find('ul').empty();;
+            $('.js-results-nav').find('legend').nextAll().remove();
         }
     });
 }
@@ -89,31 +89,36 @@ function getVideos(searchTerm, callback, pageId) {
     Next it creates pagination buttons and loads in the pageTokens of the api responses.
     */
 function loadNav (data){
-    //console.log(data.nextPageToken);
-    // iterate through api response and fill in list items in the UL
-    for (let i=0; i<data.items.length; i++){
+    // iterate through api response and fill in buttons in the form.
+    for (let i=data.items.length-1; i>=0; i--){
        // console.log(i);
-        $('.js-results-nav').find('ul').append(
-            `<li id="${data.items[i].id.videoId}" js-channel-id="${data.items[i].snippet.channelId}" js-channel-title="${data.items[i].snippet.channelTitle}">
+        //tabIndex = i + 1;
+        $('.js-results-nav').find('legend').after(
+            `<button type="button" id="${data.items[i].id.videoId}" 
+                        js-channel-id="${data.items[i].snippet.channelId}" 
+                        js-channel-title="${data.items[i].snippet.channelTitle}" 
+                        js-video-title="${data.items[i].snippet.title}">
                 <img src="${data.items[i].snippet.thumbnails.medium['url']}" alt="${data.items[i].snippet.channelTitle}">
                 <p>${data.items[i].snippet.title}</p>
-            </li>`
+            </button>`
         );
     }
+
+    //navTabIndex = tabIndex +1;
     // Create Pagination, first page, disable 'previous' button.
     if (!data.hasOwnProperty(`prevPageToken`)) {
-        $('.js-results-nav').find('ul').append(
-            `<ul class="js-nav">
-                <li id="disabled" class="js-prev-button pagination">Previous</li>
-                <li class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</li>
-            </ul> `
+        $('.js-results-nav').find('button').last().after(
+            `<div class="js-nav">
+                <button type="button" class="js-prev-button pagination" id="disabled" disabled>Previous</button>
+                <button type="button" class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</button>
+            </div> `
         );
     } else { // Create pagination, 2nd page and after get both buttons.
-        $('.js-results-nav').find('ul').append(
-            `<ul class="js-nav">
-            <li class="js-prev-button pagination" pageToken=${data.prevPageToken}>Previous</li>
-            <li class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</li>
-            </ul> `
+        $('.js-results-nav').find('button').last().after(
+            `<div class="js-nav">
+                <button type="button" class="js-prev-button pagination" pageToken=${data.prevPageToken}>Previous</button>
+                <button type="button" class="js-next-button pagination" pageToken=${data.nextPageToken}>Next</button>
+            </div> `
         );
     }
     watchNav(videoQuery);
@@ -123,24 +128,30 @@ function loadNav (data){
 
 /*  loadVideo - args:vid, chandId, chanTitle all are strings.
     Use the args to invoke the youtube player iframe embed. */
-function loadVideo(vid, chanId, chanTitle){
+function loadVideo(vid, chanId, chanTitle, videoTitle){
     let channelId = chanId;
     let videoId = vid;
     let channelTitle = chanTitle;
+    let ariaTitle = videoTitle;
     //console.log(`loadVideo Ran`);
-
+    //alert(ariaTitle);
     $('.js-player').html(
-        `<iframe width="100%" height="480" src="https://www.youtube.com/embed/${videoId}" frameborder="0" title="Youtube Video" allowfullscreen></iframe>
+        `<iframe aria-label="${ariaTitle}" width="100%" height="480" 
+            src="https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&cc_load_policy=1&iv_load_policy=3" 
+            frameborder="0" 
+            title="Youtube Video" 
+            allowfullscreen></iframe>
         <p>For more video from this channel, visit: <a href="https://www.youtube.com/channel/${channelId}" target="_blank">${channelTitle}</a></p>`
         );
 
     // event listener for button clicks. 
     // When a nav button is clicked re-run loadVideo with that button's video and channel info 
-    $('.js-results-nav').on('click', 'li',
+    $('.js-results-nav').on('click', 'button',
         function(event){
-            //console.log($(this).attr("ID"));
+            event.preventDefault();
+            event.stopPropagation();
             videoId = "";
-            loadVideo($(this).attr("ID"), $(this).attr("js-channel-id"), $(this).attr("js-channel-title") );
+            loadVideo($(this).attr("ID"), $(this).attr("js-channel-id"), $(this).attr("js-channel-title"), $(this).attr("js-video-title") );
     });    
 }
 

@@ -31,6 +31,11 @@
 .row::after {
   clear: both;
 } */
+.clip {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
+}
 
 .col-2 .col-3, .col-4, .col-6, .col-8, .col-12 {
   float: left;

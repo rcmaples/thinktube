@@ -32,7 +32,7 @@
 			<section class="col-8 search-section">
 				<form name="searchForm" class="js-search">
 	  				<label for="searchQuery">Search Videos</label>
-	  				<input type="text" id="searchQuery" name="searchQuery" class="inputSearch" placeholder="I hear the internet likes cats..." required>
+	  				<input type="text" id="searchQuery" name="searchQuery" class="inputSearch" placeholder="Enter your search" required>
 	  				<button type="submit" class="search-button" title="Search"><span style="visibility:hidden">Search</span></button>
   				</form>
 
@@ -43,8 +43,13 @@
 			<section class="col-8 js-player"></section>
 		</row>
 
-		<aside class="js-results-nav">
-			<ul></ul>
+		<aside aria-live="assertive">
+			<form>
+				<fieldset class="js-results-nav">
+					<legend >Select your video</legend>
+					
+				</fieldset>
+			</form>
 		</aside>
 
 	</main>
