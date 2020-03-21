@@ -1,5 +1,5 @@
 # Thinktube API hack
-View live here: [rcmaples.io/thinktube](https://rcmaples.io/thinktube/)
+View live here: [rcmaples.io/thinktube](https://www.rcmaples.io/thinktube/)
 
 **Highlights**
 - Previous / Next Pagination
